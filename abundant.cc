@@ -13,8 +13,11 @@
 int
 main(int argc, char *argv[])
 {
-	int nANums;
-	int *pSumDivisors;
+	int nTargetANums;
+	int nFoundANums = 0;
+	int nDivSum = 0;
+	int currPotANum;
+	int i;
 	
 	
 	if (2 != argc){
@@ -22,28 +25,34 @@ main(int argc, char *argv[])
 		exit(1);
 	}
 	
-	nANums = atoi(argv[1]);
+	nTargetANums = atoi(argv[1]);
 	
-	if (1 < nANums){
-		fprintf(stderr, "Error: argument must be positive%d \n", nANums); 
+	if (1 > nTargetANums || MAX_ANUMS < nTargetANums){
+		fprintf(stderr, "Error: N arg (%d) out of range\n", nTargetANums); 
 		exit(3);
 	}
 	
-	pSumDivisors = (int *)calloc(MAX_TBLSIZE, sizeof(int));
-	if (NULL == pSumDivisors) {
-		fprintf(stderr, "Error: out of memory\n"); 
-		exit(4);
-	}
-	
-	
-	{
-		int nCurr, nDivisor, bPassedNum;
-		bPassedNum = 0;
-		
-		for(n=1; !bPassedNum;n++){
-		}
-	}
-	
-	free(pSumDivisors);
+	currPotANum = 1;
+	  
+	while (nFoundANums < nTargetANums) {
+
+	  currPotANum++;	  
+	  nDivSum = 0;
+	  i=2;
+	  while(i < currPotANum) { 
+	    nDivSum += currPotANum % i ? 0 : i;
+	      
+	    if (nDivSum >= currPotANum) {
+	      /*it is an abundant num */
+	      printf("%d\n", currPotANum);
+	      nFoundANums++;
+	      break;
+	    }
+	    i++;
+	  } /* end looking for one */
+	    
+
+	} /* end finding N A Nums*/
+	  
 	exit(0);
 }
